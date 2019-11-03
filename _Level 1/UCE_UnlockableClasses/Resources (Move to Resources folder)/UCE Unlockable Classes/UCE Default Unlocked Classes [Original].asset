@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62f2d9edc7cef4e67802f1ab5b5dd732, type: 3}
+  m_Name: UCE Default Unlocked Classes [Original]
+  m_EditorClassIdentifier: 
+  defaultClasses:
+  - {fileID: 114732280623991920, guid: e3888cbb1e7294277abbc8b812387043, type: 3}
+  - {fileID: 114064821627912484, guid: 8b4dd7850385ccb45b87b83a84a4ad4a, type: 3}

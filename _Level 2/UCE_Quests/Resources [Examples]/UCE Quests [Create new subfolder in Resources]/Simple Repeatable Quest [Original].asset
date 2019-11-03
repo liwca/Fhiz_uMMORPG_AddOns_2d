@@ -1,0 +1,114 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd43f16fdb0ce4722874bc9eec6aba99, type: 3}
+  m_Name: Simple Repeatable Quest [Original]
+  m_EditorClassIdentifier: 
+  repeatable: 1
+  showRewards: 1
+  toolTip: '<b>{NAME}</b>
+
+    Kill one Sapling every hour to get a health potion. Sometimes you even get a Vigor
+    potion as reward!
+
+
+    Tasks:
+
+    {KILLTARGET}
+
+    {GATHERTARGET}
+
+    {HARVESTTARGET}
+
+    {CRAFTTARGET}
+
+    {EXPLORETARGET}
+
+    {VISITTARGET}
+
+    {LOOTTARGET}
+
+    {FACTIONTARGET}
+
+
+    Rewards:
+
+    * {REWARDGOLD} Gold
+
+    * {REWARDEXPERIENCE} Experience
+
+    * {REWARDCOINS} Coins
+
+    {REWARDITEMS}
+
+
+    {REPEATABLE}'
+  questRequirements:
+    isActive: 1
+    aliveOnly: 1
+    stateType: 0
+    minLevel: 0
+    maxLevel: 0
+    minHealth: 0
+    minMana: 0
+    dayStart: 0
+    dayEnd: 0
+    activeMonth: 0
+    requiredSkills: []
+    requiresAllSkills: 0
+    requiredBuff: {fileID: 0}
+    prohibitedBuff: {fileID: 0}
+    allowedClasses: []
+    requiresParty: 0
+    requiresGuild: 0
+    requiredEquipment: []
+    requiresAllEquipment: 0
+    requiredItems: []
+    requiresAllItems: 0
+    requiredQuest: {fileID: 0}
+    questMustBeInProgress: 0
+  acceptItems: []
+  removeAtCompletion: 0
+  questRewards:
+  - rewardChance: 0.9
+    availableToClass: []
+    rewardGold: 1
+    rewardCoins: 1
+    rewardExperience: 1
+    rewardItem:
+    - item: {fileID: 11400000, guid: efcd52c07805b4550930638bb90d380c, type: 2}
+      amount: 1
+    honorCurrency: []
+  - rewardChance: 0.1
+    availableToClass: []
+    rewardGold: 3
+    rewardCoins: 3
+    rewardExperience: 3
+    rewardItem:
+    - item: {fileID: 11400000, guid: 26b404de2c160499bab1fcda06a555f4, type: 2}
+      amount: 1
+    honorCurrency: []
+  visitTarget: []
+  killTarget:
+  - target: {fileID: 114194098868247622, guid: e99e29064241846d297668f71b57c3f3, type: 3}
+    amount: 1
+  gatherTarget: []
+  DontDestroyGathered: 0
+  autoCompleteQuest: 0
+  headerPvpTarget: '* Kill Players '
+  headerKillTarget: '* Kill Monsters '
+  headerGatherTarget: '* Gather Items '
+  headerVisitTarget: '* Visit Npc''s '
+  headerExploreTarget: '* Explore Areas '
+  headerHarvestTarget: '* Harvest Resources '
+  headerCraftTarget: '* Craft Items '
+  headerLootTarget: '* Loot Crates '
+  headerFactionTarget: '* Faction Requirement '
