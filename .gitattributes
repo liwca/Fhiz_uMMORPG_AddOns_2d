@@ -1,0 +1,15 @@
+# Auto detect text files and perform LF normalization
+* text=auto
+
+# Declare files that will always have LF line endings on checkout. (Because of Fhiz addons are saved with LF)
+*.cs text eol=lf
+*.meta text eol=lf
+*.prefab text eol=lf
+*.html text eol=lf
+*.asset text eol=lf
+*.gitattributes text eol=lf
+*.gitignore text eol=lf
+*.md text eol=lf
+*.controller text eol=lf
+*.anim text eol=lf
+*.mat text eol=lf
