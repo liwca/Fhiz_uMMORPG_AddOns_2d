@@ -1,9 +1,10 @@
 // =======================================================================================
-// Created and maintained by Fhiz
+// Created and maintained by iMMO
 // Usable for both personal and commercial projects, but no sharing or re-sale
 // * Discord Support Server.............: https://discord.gg/YkMbDHs
 // * Public downloads website...........: https://www.indie-mmo.net
 // * Pledge on Patreon for VIP AddOns...: https://www.patreon.com/IndieMMO
+// * Instructions.......................: https://indie-mmo.net/knowledge-base/
 // =======================================================================================
 using Mirror;
 using System;
@@ -12,9 +13,8 @@ using System.Linq;
 using System.Reflection;
 using UnityEngine;
 
-// =======================================================================================
 // UCE ADMINISTRATION - CONSOLE
-// =======================================================================================
+
 public partial class UCE_AdministrationConsole : NetworkBehaviour
 {
     public UCE_AdminCommandList adminCommands;
@@ -286,7 +286,7 @@ public partial class UCE_AdministrationConsole : NetworkBehaviour
     [Command]
     public void Cmd_UCE_Admin_SetAdmin(string adminTargets, string adminTargetName, int adminValue)
     {
-        if (adminValue < 0 || adminValue > 255) return;
+        if (adminValue < 0 || adminValue > 255 || player.UCE_adminLevel <= 0) return;
 
         List<Player> players = new List<Player>();
         players = getPlayerTargets(adminTargets, adminTargetName);
@@ -322,6 +322,9 @@ public partial class UCE_AdministrationConsole : NetworkBehaviour
     [Command]
     public void Cmd_UCE_Admin_GiveItem(string adminTargets, string adminTargetName, int adminValue, string adminItemName)
     {
+
+        if (player.UCE_adminLevel <= 0) return;
+
         ScriptableItem item = getItem(adminItemName);
         if (item == null) return;
 
@@ -358,7 +361,7 @@ public partial class UCE_AdministrationConsole : NetworkBehaviour
     [Command]
     public void Cmd_UCE_Admin_GiveGold(string adminTargets, string adminTargetName, int adminValue)
     {
-        if (adminValue == 0) return;
+        if (player.UCE_adminLevel <= 0 || adminValue == 0) return;
 
         List<Player> players = new List<Player>();
         players = getPlayerTargets(adminTargets, adminTargetName);
@@ -390,7 +393,7 @@ public partial class UCE_AdministrationConsole : NetworkBehaviour
     [Command]
     public void Cmd_UCE_Admin_GiveExp(string adminTargets, string adminTargetName, int adminValue)
     {
-        if (adminValue == 0) return;
+        if (player.UCE_adminLevel <= 0 || adminValue == 0) return;
 
         List<Player> players = new List<Player>();
         players = getPlayerTargets(adminTargets, adminTargetName);
@@ -422,7 +425,7 @@ public partial class UCE_AdministrationConsole : NetworkBehaviour
     [Command]
     public void Cmd_UCE_Admin_GiveCoins(string adminTargets, string adminTargetName, int adminValue)
     {
-        if (adminValue == 0) return;
+        if (player.UCE_adminLevel <= 0 || adminValue == 0) return;
 
         List<Player> players = new List<Player>();
         players = getPlayerTargets(adminTargets, adminTargetName);
@@ -451,6 +454,8 @@ public partial class UCE_AdministrationConsole : NetworkBehaviour
     [Command]
     public void Cmd_UCE_Admin_KillPlayer(string adminTargets, string adminTargetName)
     {
+        if (player.UCE_adminLevel <= 0) return;
+
         List<Player> players = new List<Player>();
         players = getPlayerTargets(adminTargets, adminTargetName);
 
@@ -478,6 +483,8 @@ public partial class UCE_AdministrationConsole : NetworkBehaviour
     [Command]
     public void Cmd_UCE_Admin_BanAccount(string adminTargets, string adminTargetName)
     {
+        if (player.UCE_adminLevel <= 0) return;
+
         List<Player> players = new List<Player>();
         players = getPlayerTargets(adminTargets, adminTargetName);
 
@@ -508,7 +515,7 @@ public partial class UCE_AdministrationConsole : NetworkBehaviour
     [Command]
     public void Cmd_UCE_Admin_UnbanAccount(string adminAccountName)
     {
-        if (adminAccountName == "") return;
+        if (player.UCE_adminLevel <= 0 || adminAccountName == "") return;
 
         Database.singleton.UnbanAccount(adminAccountName);
     }
@@ -529,6 +536,8 @@ public partial class UCE_AdministrationConsole : NetworkBehaviour
     [Command]
     public void Cmd_UCE_Admin_GetAccountName(string adminPlayerName)
     {
+        if (player.UCE_adminLevel <= 0) return;
+
         if (adminPlayerName == "") return;
         string adminAccountName = Database.singleton.GetAccountName(adminPlayerName);
         player.UCE_TargetAddMessage("[Sys] " + adminPlayerName + "'s account name is: " + adminAccountName);
@@ -547,6 +556,8 @@ public partial class UCE_AdministrationConsole : NetworkBehaviour
     [Command]
     public void Cmd_UCE_Admin_CleanDatabase(string[] parsedArgs)
     {
+        if (player.UCE_adminLevel <= 0) return;
+
 #if _iMMODBCLEANER
         _NetworkManagerMMO.OnStartServer_UCE_DatabaseCleaner();
 #endif
@@ -569,6 +580,9 @@ public partial class UCE_AdministrationConsole : NetworkBehaviour
     [Command]
     public void Cmd_UCE_Admin_TeleportPlayer(string adminTargets, string adminTargetName)
     {
+
+        if (player.UCE_adminLevel <= 0) return;
+
         List<Player> players = new List<Player>();
         players = getPlayerTargets(adminTargets, adminTargetName);
 
@@ -591,6 +605,9 @@ public partial class UCE_AdministrationConsole : NetworkBehaviour
     [Command]
     public void Cmd_UCE_Admin_OnlinePlayers(string[] parsedArgs)
     {
+
+        if (player.UCE_adminLevel <= 0) return;
+
         int playerCount = Player.onlinePlayers.Count;
 
         player.UCE_TargetAddMessage("[Sys] There are currently <" + playerCount + "> players online.");
@@ -615,7 +632,7 @@ public partial class UCE_AdministrationConsole : NetworkBehaviour
     [Command]
     public void Cmd_UCE_Admin_SummonMonster(string adminTargetName, int adminValue)
     {
-        if (adminValue <= 0) return;
+        if (player.UCE_adminLevel <= 0 || adminValue <= 0) return;
 
         Monster monster = _NetworkManagerMMO.cachedMonsters().Find(x => x.name.ToLower() == adminTargetName.ToLower());
 
@@ -645,6 +662,8 @@ public partial class UCE_AdministrationConsole : NetworkBehaviour
     [Command]
     public void Cmd_UCE_Admin_SummonNpc(string adminTargetName)
     {
+        if (player.UCE_adminLevel <= 0) return;
+
         Npc npc = _NetworkManagerMMO.cachedNpcs().Find(x => x.name.ToLower() == adminTargetName.ToLower());
 
         GameObject go = Instantiate(npc.gameObject, player.transform.position, player.transform.rotation);
@@ -667,6 +686,8 @@ public partial class UCE_AdministrationConsole : NetworkBehaviour
     [Command]
     public void Cmd_UCE_Admin_UnsummonEntity(string[] parsedArgs)
     {
+        if (player.UCE_adminLevel <= 0) return;
+
         if (player.target != null && (player.target is Monster || player.target is Npc))
         {
             NetworkServer.Destroy(player.target.gameObject);
@@ -690,6 +711,8 @@ public partial class UCE_AdministrationConsole : NetworkBehaviour
     [Command]
     public void Cmd_UCE_Admin_KickPlayer(string adminTargets, string adminTargetName)
     {
+        if (player.UCE_adminLevel <= 0) return;
+
         List<Player> players = new List<Player>();
         players = getPlayerTargets(adminTargets, adminTargetName);
 
@@ -717,6 +740,8 @@ public partial class UCE_AdministrationConsole : NetworkBehaviour
     [Command]
     public void Cmd_UCE_Admin_DeletePlayer(string adminTargets, string adminTargetName)
     {
+        if (player.UCE_adminLevel <= 0) return;
+
         List<Player> players = new List<Player>();
         players = getPlayerTargets(adminTargets, adminTargetName);
 
@@ -747,7 +772,7 @@ public partial class UCE_AdministrationConsole : NetworkBehaviour
     [Command]
     public void Cmd_UCE_Admin_UndeletePlayer(string adminTargetName)
     {
-        if (adminTargetName == "") return;
+        if (player.UCE_adminLevel <= 0 || adminTargetName == "") return;
         Database.singleton.SetCharacterDeleted(adminTargetName, false);
     }
 
@@ -769,6 +794,8 @@ public partial class UCE_AdministrationConsole : NetworkBehaviour
     [Command]
     public void Cmd_UCE_Admin_SendMessage(string adminTargets, string adminTargetName, string adminTargetMessage)
     {
+        if (player.UCE_adminLevel <= 0) return;
+
         List<Player> players = new List<Player>();
         players = getPlayerTargets(adminTargets, adminTargetName);
 
